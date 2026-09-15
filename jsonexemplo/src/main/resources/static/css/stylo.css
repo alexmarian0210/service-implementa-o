@@ -1,0 +1,65 @@
+/* Estilo geral da página */
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: rgb(217, 248, 248);
+}
+
+/* Títulos */
+h1 {
+    color: #000000;
+}
+
+/* Tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: blanchedalmond;
+}
+
+/* Cabeçalho e células */
+th,
+td {
+    padding: 12px;
+    border: 1px solid #1a1818;
+    text-align: left;
+}
+
+/* Cabeçalho */
+th {
+    background-color: #272525;
+    color: beige;
+}
+
+/* Links */
+a {
+    display: inline-block;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color:blue;
+}
+
+/* Formulário */
+form {
+    background-color: rgb(206, 191, 231);
+    padding: 20px;
+    max-width: 500px;
+    margin: 50px;
+}
+
+/* Campos */
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 500px;
+    box-sizing: border-box;
+}
+
+/* Botão */
+button {
+    padding: auto;
+    color: blue;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+}
