@@ -1,28 +1,54 @@
 package com.example.jsonex.jsonexemplo.model;
 
 public class Aluno {
+    private Long id;
     private String nome;
     private int idade;
     private String curso;
 
-    // 1. Construtor vazio (OBRIGATÓRIO para o formulário Thymeleaf)
+    // Construtor vazio
     public Aluno() {
     }
 
-    // 2. Construtor com argumentos (que você já tinha)
-    public Aluno(String nome, int idade, String curso) {
+    // Construtor completo
+    public Aluno(Long id, String nome, int idade, String curso) {
+        this.id = id;
         this.nome = nome;
         this.idade = idade;
         this.curso = curso;
     }
 
-    // Getters e Setters
-    public String getNome() { return nome; }
-    public void setNome(String nome) { this.nome = nome; } // Setters são OBRIGATÓRIOS agora
+    // GETTERS
+    public Long getId() {
+        return id;
+    }
 
-    public int getIdade() { return idade; }
-    public void setIdade(int idade) { this.idade = idade; }
+    public String getNome() {
+        return nome;
+    }
 
-    public String getCurso() { return curso; }
-    public void setCurso(String curso) { this.curso = curso; }
-} 
+    public int getIdade() {
+        return idade;
+    }
+
+    public String getCurso() {
+        return curso;
+    }
+
+    // SETTERS
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public void setCurso(String curso) {
+        this.curso = curso;
+    }
+}
