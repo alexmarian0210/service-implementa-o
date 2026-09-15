@@ -5,18 +5,17 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.jsonex.jsonexemplo.model.Aluno;
 
+// Indica ao Spring que esta classe pertence
+// à camada de serviço da aplicação.
 @Service
 public class AlunoService {
-    // Lista que funciona como nosso "banco de dados"
-    // temporário.
+    // Lista que simula temporariamente um banco de dados.
     private final List<Aluno> alunos = new ArrayList<>();
-    // Variável usada para gerar IDs automaticamente.
+    // Variável responsável pela geração dos IDs.
     private Long proximoId = 1L;
 
-    // Construtor do Service.
+    // Construtor executado quando o Service é criado.
     public AlunoService() {
-        // Utilizamos o próprio método cadastrar()
-        // para criar os alunos iniciais.
         cadastrar(
                 new Aluno(
                         null,
@@ -37,72 +36,76 @@ public class AlunoService {
                         "Redes de Computadores"));
     }
 
-    // ==================================================
-    // READ - LISTAR TODOS
-    // ==================================================
+    // =================================================
+    // LISTAR TODOS
+    // READ
+    // =================================================
     public List<Aluno> listarTodos() {
         return alunos;
     }
 
-    // ==================================================
-    // READ - BUSCAR POR ID
-    // ==================================================
+    // =================================================
+    // BUSCAR POR ID
+    // READ
+    // =================================================
     public Aluno buscarPorId(Long id) {
-        // Percorre todos os alunos da lista.
         for (Aluno aluno : alunos) {
-            // Verifica se o ID do aluno
-            // é igual ao ID procurado.
             if (aluno.getId().equals(id)) {
                 return aluno;
             }
         }
-        // Caso não encontre, retorna null.
+        // Caso nenhum aluno seja encontrado
         return null;
     }
 
-    // ==================================================
-    // CREATE - CADASTRAR
-    // ==================================================
-    public void cadastrar(Aluno aluno) {
-        // Define automaticamente o ID.
+    // =================================================
+    // CADASTRAR
+    // CREATE
+    // =================================================
+    public Aluno cadastrar(Aluno aluno) {
+        // Define o ID automaticamente
         aluno.setId(proximoId);
-        // Incrementa o próximo ID.
+        // Incrementa para o próximo cadastro
         proximoId++;
-        // Adiciona o aluno à lista.
+        // Adiciona na lista
         alunos.add(aluno);
+        // Retorna o aluno cadastrado
+        return aluno;
     }
 
-    // ==================================================
-    // UPDATE - ATUALIZAR
-    // ==================================================
-    public boolean atualizar(Long id, Aluno alunoAtualizado) {
-        // Primeiro procuramos o aluno.
+    // =================================================
+    // ATUALIZAR
+    // UPDATE
+    // =================================================
+    public Aluno atualizar(Long id, Aluno alunoAtualizado) {
+        // Procura o aluno que já existe
         Aluno alunoExistente = buscarPorId(id);
-        // Se não existir, não conseguimos atualizar.
+        // Se não encontrar, retorna null
         if (alunoExistente == null) {
-            return false;
+            return null;
         }
-        // Atualizamos os dados.
+        // Atualiza apenas os dados que podem ser alterados
         alunoExistente.setNome(
                 alunoAtualizado.getNome());
         alunoExistente.setIdade(
                 alunoAtualizado.getIdade());
         alunoExistente.setCurso(
                 alunoAtualizado.getCurso());
-        return true;
+        return alunoExistente;
     }
 
-    // ==================================================
-    // DELETE - EXCLUIR
-    // ==================================================
+    // =================================================
+    // EXCLUIR
+    // DELETE
+    // =================================================
     public boolean excluir(Long id) {
-        // Busca o aluno.
+        // Procura o aluno
         Aluno aluno = buscarPorId(id);
-        // Verifica se existe.
+        // Verifica se existe
         if (aluno == null) {
             return false;
         }
-        // Remove da lista.
+        // Remove da lista
         alunos.remove(aluno);
         return true;
     }

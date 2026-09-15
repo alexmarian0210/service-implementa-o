@@ -10,8 +10,8 @@
 <body>
     <div class="container">
         <h1>Lista de Alunos</h1>
-        <a th:href="@{/alunos/novo}">
-            Cadastrar novo aluno
+        <a class="botao" th:href="@{/alunos/novo}">
+            Novo aluno
         </a>
         <table>
             <thead>
@@ -26,26 +26,28 @@
             <tbody>
                 <tr th:each="aluno : ${alunos}">
                     <td th:text="${aluno.id}">
-                        ID
+                        1
                     </td>
                     <td th:text="${aluno.nome}">
-                        Nome
+                        João
                     </td>
                     <td th:text="${aluno.idade}">
-                        Idade
+                        17
                     </td>
                     <td th:text="${aluno.curso}">
-                        Curso
+                        Informática
                     </td>
                     <td>
                         <!-- EDITAR -->
-                        <a th:href="@{/alunos/editar/{id}(id=${aluno.id})}">
+                        <a th:href="@{/alunos/{id}/editar(id=${aluno.id})}">
                             Editar
                         </a>
                         <!-- EXCLUIR -->
-                        <a th:href="@{/alunos/excluir/{id}(id=${aluno.id})}">
-                            Excluir
-                        </a>
+                        <form th:action="@{/alunos/{id}/excluir(id=${aluno.id})}" method="post" style="display:inline;">
+                            <button type="submit">
+                                Excluir
+                            </button>
+                        </form>
                     </td>
                 </tr>
             </tbody>

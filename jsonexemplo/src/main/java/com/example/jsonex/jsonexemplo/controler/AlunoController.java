@@ -11,66 +11,98 @@ import com.example.jsonex.jsonexemplo.service.AlunoService;
 
 @Controller
 public class AlunoController {
+    // O Controller depende do Service
     private final AlunoService alunoService;
 
     // Injeção de dependência
+    //
+    // O Spring cria o AlunoService e entrega
+    // automaticamente para o Controller.
     public AlunoController(AlunoService alunoService) {
         this.alunoService = alunoService;
     }
 
     // ==================================================
-    // LISTAR
+    // LISTAR ALUNOS
     // ==================================================
+    // GET
+    // http://localhost:8080/alunos
     @GetMapping("/alunos")
     public String listarAlunos(Model model) {
+        // Solicita os alunos para o Service
         model.addAttribute(
                 "alunos",
                 alunoService.listarTodos());
+        // Abre:
+        // templates/alunos.html
         return "alunos";
     }
 
     // ==================================================
     // ABRIR FORMULÁRIO DE CADASTRO
     // ==================================================
+    // GET
+    // http://localhost:8080/alunos/novo
     @GetMapping("/alunos/novo")
-    public String abrirFormulario(Model model) {
+    public String novoAluno(Model model) {
+        // Cria um aluno vazio para o formulário
         model.addAttribute(
                 "aluno",
                 new Aluno());
+        // Podemos também enviar um título
+        // para reaproveitar o mesmo formulário.
+        model.addAttribute(
+                "titulo",
+                "Cadastrar Aluno");
         return "formulario-aluno";
     }
 
     // ==================================================
     // CADASTRAR
     // ==================================================
+    // POST
+    // http://localhost:8080/alunos
     @PostMapping("/alunos")
     public String cadastrarAluno(
             @ModelAttribute Aluno aluno) {
+        // O Controller envia o aluno para o Service
         alunoService.cadastrar(aluno);
+        // Depois faz nova requisição para GET /alunos
         return "redirect:/alunos";
     }
 
     // ==================================================
     // ABRIR FORMULÁRIO DE EDIÇÃO
     // ==================================================
-    @GetMapping("/alunos/editar/{id}")
-    public String abrirEdicao(
+    // Exemplo:
+    // GET /alunos/2/editar
+    @GetMapping("/alunos/{id}/editar")
+    public String editarAluno(
             @PathVariable Long id,
             Model model) {
-        // Busca o aluno pelo ID.
+        // Busca o aluno no Service
         Aluno aluno = alunoService.buscarPorId(id);
-        // Envia o aluno encontrado
-        // para o formulário.
+        // Se o aluno não existir,
+        // voltamos para a listagem.
+        if (aluno == null) {
+            return "redirect:/alunos";
+        }
+        // Envia o aluno existente para o formulário
         model.addAttribute(
                 "aluno",
                 aluno);
-        return "editar-aluno";
+        model.addAttribute(
+                "titulo",
+                "Editar Aluno");
+        return "formulario-aluno";
     }
 
     // ==================================================
     // ATUALIZAR
     // ==================================================
-    @PostMapping("/alunos/editar/{id}")
+    // POST
+    // /alunos/2/editar
+    @PostMapping("/alunos/{id}/editar")
     public String atualizarAluno(
             @PathVariable Long id,
             @ModelAttribute Aluno aluno) {
@@ -83,7 +115,9 @@ public class AlunoController {
     // ==================================================
     // EXCLUIR
     // ==================================================
-    @GetMapping("/alunos/excluir/{id}")
+    // POST
+    // /alunos/2/excluir
+    @PostMapping("/alunos/{id}/excluir")
     public String excluirAluno(
             @PathVariable Long id) {
         alunoService.excluir(id);
